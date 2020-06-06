@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Created by jt on 9/27/17.
+ */
 @Controller
 @RequestMapping("/api/v1/customers/")
 public class CustomerController {
@@ -21,15 +24,16 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<CustomerListDTO> getAllCustomers() {
+    public ResponseEntity<CustomerListDTO> getListofCustomers(){
 
-        return new ResponseEntity<CustomerListDTO>(new CustomerListDTO(
-                customerService.getAllCustomers()
-        ), HttpStatus.OK);
+        return new ResponseEntity<CustomerListDTO>(new CustomerListDTO(customerService.getAllCustomers()),
+                HttpStatus.OK);
+
     }
 
-    @GetMapping("{firstName}")
-    public ResponseEntity<CustomerDTO> getCustomerByFirstName(@PathVariable String firstName) {
-        return new ResponseEntity<CustomerDTO>(customerService.getCustomerByFirstName(firstName), HttpStatus.OK);
+    @GetMapping({"{id}"})
+    public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id){
+        return new ResponseEntity<CustomerDTO>(customerService.getCustomerById(id), HttpStatus.OK);
     }
+
 }

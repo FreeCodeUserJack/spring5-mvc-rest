@@ -13,16 +13,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class Bootstrap implements CommandLineRunner{
 
-    private CategoryRepository categoryRepository;
-    private CustomerRepository customerRepository;
+    private final CategoryRepository categoryRespository;
+    private final CustomerRepository customerRepository;
 
-    public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
-        this.categoryRepository = categoryRepository;
+    public Bootstrap(CategoryRepository categoryRespository, CustomerRepository customerRepository) {
+        this.categoryRespository = categoryRespository;
         this.customerRepository = customerRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+        loadCategories();
+        loadCustomers();
+    }
+
+    private void loadCategories() {
         Category fruits = new Category();
         fruits.setName("Fruits");
 
@@ -38,35 +44,30 @@ public class Bootstrap implements CommandLineRunner{
         Category nuts = new Category();
         nuts.setName("Nuts");
 
-        categoryRepository.save(fruits);
-        categoryRepository.save(dried);
-        categoryRepository.save(fresh);
-        categoryRepository.save(exotic);
-        categoryRepository.save(nuts);
+        categoryRespository.save(fruits);
+        categoryRespository.save(dried);
+        categoryRespository.save(fresh);
+        categoryRespository.save(exotic);
+        categoryRespository.save(nuts);
 
-        System.out.println("Data Loaded = " + categoryRepository.count() );
+        System.out.println("Categories Loaded: " + categoryRespository.count());
+    }
 
+    private void loadCustomers() {
+        //given
+        Customer customer1 = new Customer();
+        customer1.setId(1l);
+        customer1.setFirstname("Michale");
+        customer1.setLastname("Weston");
+        customerRepository.save(customer1);
 
-        Customer c1 = new Customer();
-        c1.setFirstName("John");
-        c1.setLastName("Doe");
-        c1.setCustomer_url("/api/v1/customers/john_doe");
+        Customer customer2 = new Customer();
+        customer2.setId(2l);
+        customer2.setFirstname("Sam");
+        customer2.setLastname("Axe");
 
-        Customer c2 = new Customer();
-        c2.setFirstName("Jane");
-        c2.setLastName("Fonda");
-        c2.setCustomer_url("/api/v1/customers/jane_fonda");
+        customerRepository.save(customer2);
 
-        Customer c3 = new Customer();
-        c3.setFirstName("Jack");
-        c3.setLastName("Daniels");
-        c3.setCustomer_url("/api/v1/customers/jack_daniels");
-
-        customerRepository.save(c1);
-        customerRepository.save(c2);
-        customerRepository.save(c3);
-
-        System.out.println("Customers added = " + customerRepository.count());
-
+        System.out.println("Customers Loaded: " + customerRepository.count());
     }
 }
