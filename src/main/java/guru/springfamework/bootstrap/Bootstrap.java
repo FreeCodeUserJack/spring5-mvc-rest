@@ -2,8 +2,10 @@ package guru.springfamework.bootstrap;
 
 import guru.springfamework.domain.Category;
 import guru.springfamework.domain.Customer;
+import guru.springfamework.domain.Vendor;
 import guru.springfamework.repositories.CategoryRepository;
 import guru.springfamework.repositories.CustomerRepository;
+import guru.springfamework.repositories.VendorRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,10 +17,12 @@ public class Bootstrap implements CommandLineRunner{
 
     private final CategoryRepository categoryRespository;
     private final CustomerRepository customerRepository;
+    private final VendorRepository vendorRepository;
 
-    public Bootstrap(CategoryRepository categoryRespository, CustomerRepository customerRepository) {
+    public Bootstrap(CategoryRepository categoryRespository, CustomerRepository customerRepository, VendorRepository vendorRepository) {
         this.categoryRespository = categoryRespository;
         this.customerRepository = customerRepository;
+        this.vendorRepository = vendorRepository;
     }
 
     @Override
@@ -26,6 +30,7 @@ public class Bootstrap implements CommandLineRunner{
 
         loadCategories();
         loadCustomers();
+        loadVendors();
     }
 
     private void loadCategories() {
@@ -69,5 +74,25 @@ public class Bootstrap implements CommandLineRunner{
         customerRepository.save(customer2);
 
         System.out.println("Customers Loaded: " + customerRepository.count());
+    }
+
+    private void loadVendors() {
+        Vendor v1 = new Vendor();
+        v1.setId(1L);
+        v1.setName("John");
+
+        Vendor v2 = new Vendor();
+        v2.setId(2L);
+        v2.setName("Jack");
+
+        Vendor v3 = new Vendor();
+        v3.setId(3L);
+        v3.setName("Jayce");
+
+        vendorRepository.save(v1);
+        vendorRepository.save(v2);
+        vendorRepository.save(v3);
+
+        System.out.println("Vendors Loaded: " + vendorRepository.count());
     }
 }
