@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class VendorControllerTest {
 
     @MockBean //provided by Spring Context
-            VendorService vendorService;
+    VendorService vendorService;
 
     @Autowired
     MockMvc mockMvc; //provided by Spring Context
@@ -52,7 +52,7 @@ public class VendorControllerTest {
         given(vendorService.getAllVendors()).willReturn(vendorListDTO);
 
         mockMvc.perform(get(VendorController.BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.vendors", hasSize(2)));
     }
@@ -74,8 +74,8 @@ public class VendorControllerTest {
         given(vendorService.createNewVendor(vendorDTO_1)).willReturn(vendorDTO_1);
 
         mockMvc.perform(post(VendorController.BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(vendorDTO_1)))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(asJsonString(vendorDTO_1)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", equalTo(vendorDTO_1.getName())));
     }
@@ -108,7 +108,7 @@ public class VendorControllerTest {
         mockMvc.perform(delete(VendorController.BASE_URL + "/1"))
                 .andExpect(status().isOk());
 
-        then(vendorService).should().deleteById(anyLong());
+        then(vendorService).should().deleteVendorById(anyLong());
 
     }
 }

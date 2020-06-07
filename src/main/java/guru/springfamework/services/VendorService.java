@@ -3,11 +3,15 @@ package guru.springfamework.services;
 import guru.springfamework.api.v1.model.VendorDTO;
 import guru.springfamework.api.v1.model.VendorListDTO;
 
+
+/**
+ * Created by jt on 10/6/17.
+ */
 public interface VendorService {
 
-    VendorListDTO getAllVendors();
-
     VendorDTO getVendorById(Long id);
+
+    VendorListDTO getAllVendors();
 
     VendorDTO createNewVendor(VendorDTO vendorDTO);
 
@@ -15,5 +19,5 @@ public interface VendorService {
 
     VendorDTO patchVendor(Long id, VendorDTO vendorDTO);
 
-    void deleteById(Long id);
+    void deleteVendorById(Long id);
 }
